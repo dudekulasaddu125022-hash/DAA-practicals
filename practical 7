@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int n, amount;
+
+    printf("Enter number of coins: ");
+    scanf("%d", &n);
+
+    int coin[n];
+
+    printf("Enter coins: ");
+    for (int i = 0; i < n; i++)
+        scanf("%d", &coin[i]);
+
+    printf("Enter amount: ");
+    scanf("%d", &amount);
+
+    int dp[amount + 1];
+
+    dp[0] = 0;
+
+    for (int i = 1; i <= amount; i++)
+        dp[i] = 9999;
+
+    for (int i = 1; i <= amount; i++) {
+        for (int j = 0; j < n; j++) {
+            if (coin[j] <= i)
+                dp[i] = (dp[i] < dp[i - coin[j]] + 1)
+                        ? dp[i] : dp[i - coin[j]] + 1;
+        }
+    }
+
+    printf("Minimum coins = %d", dp[amount]);
+
+    return 0;
+}
